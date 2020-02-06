@@ -5,7 +5,7 @@ import org.jenkins.*
 private def helper = new serviceHelper()
 
 def call(Map StageParams){
-    new serviceHelper().serviceHandler("${StageParams.name}", "${StageParams.action}")
+    helper.serviceHandler("${StageParams.name}", "${StageParams.action}")
 }
 
 def status(Map StageParams){
