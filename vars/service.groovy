@@ -2,7 +2,7 @@
 
 import org.jenkins.*
 
-private def helper = new serviceHelper()
+public def helper = new serviceHelper()
 
 def call(Map StageParams){
     helper.serviceHandler("${StageParams.name}", "${StageParams.action}")
