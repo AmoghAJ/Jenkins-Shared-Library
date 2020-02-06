@@ -22,7 +22,7 @@ pipeline {
         stage('Nginx Operation') {
             agent { label "${params.LABEL}" }
             steps {
-                service name: "nginx" action: "${params.ACTION}"    
+                serviceOperation name: "nginx" action: "${params.ACTION}"    
             }
             post {
                 always {
