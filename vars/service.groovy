@@ -11,18 +11,23 @@ def call(Map StageParams){
     helper.serviceHandler("${StageParams.name}", "${StageParams.action}")
 }
 
-def status(Map StageParams){
-    helper.serviceHandler("${StageParams.name}", "status")
-}
+// def start(Map StageParams){
+//     helper = serviceHelper()
+//     helper.serviceHandler("${StageParams.name}", "start")
+// }
 
-def start(Map StageParams){
-    helper.serviceHandler("${StageParams.name}", "start")
-}
+// def stop(Map StageParams){
+//     helper = serviceHelper()
+//     helper.serviceHandler("${StageParams.name}", "stop")
+// }
 
-def stop(Map StageParams){
-    helper.serviceHandler("${StageParams.name}", "stop")
-}
+// def restart(Map StageParams){
+//     helper = serviceHelper()
+//     helper.serviceHandler("${StageParams.name}", "restart")
+// }
 
-def restart(Map StageParams){
-    helper.serviceHandler("${StageParams.name}", "restart")
+def buildStatus(String service, String action) {
+    helper = serviceHelper()
+    exitCode = helper.serviceHandler("${service}", "status", true)
+    helper.setBuildStatus(action, exitCode)
 }

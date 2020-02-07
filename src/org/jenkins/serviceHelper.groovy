@@ -1,13 +1,35 @@
 package org.jenkins
 
+private int serviceActionReturnExitCode(String service, String action) {
+    exitCode = sh returnStatus: true script: "sudo service ${service} ${action}"
+    return exitCode
+}
+
 private void serviceAction(String service, String action) {
     sh "sudo service ${service} ${action}"
 }
 
-void serviceHandler(String service, String action) {
+void setBuildStatus(String action, Int exitCode) {
+    if ("${action}" == 'start' || "${action}" == 'restart') {
+        if (exitCode != 0) {
+            currentBuild.result = 'FAILURE'
+        }
+    } else if ("${action}" == 'stop') {
+        if (exitCode != 0) {
+            println ("Script exit code: ${RETURN_STATUS}")
+            currentBuild.result = 'SUCCESS'
+        }
+    }
+}
+
+def serviceHandler(String service, String action, Boolean returnExitCode = false) {
     switch(action) {
         case 'status':
-            serviceAction(service, action)
+            if(returnExitCode) {
+                return serviceActionReturnExitCode(service, action)
+            } else {
+                serviceAction(service, action)
+            }
         break
 
         case 'start':
