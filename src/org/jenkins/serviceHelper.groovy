@@ -9,7 +9,7 @@ private void serviceAction(String service, String action) {
     sh "sudo service ${service} ${action}"
 }
 
-void setBuildStatus(String action, Int exitCode) {
+void setBuildStatus(String action, int exitCode) {
     if ("${action}" == 'start' || "${action}" == 'restart') {
         if (exitCode != 0) {
             currentBuild.result = 'FAILURE'
