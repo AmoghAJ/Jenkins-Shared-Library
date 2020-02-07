@@ -1,7 +1,7 @@
 package org.jenkins
 
 private int serviceActionReturnExitCode(String service, String action) {
-    exitCode = sh returnStatus: true script: "sudo service ${service} ${action}"
+    exitCode = sh returnStatus: true, script: "sudo service ${service} ${action}"
     return exitCode
 }
 

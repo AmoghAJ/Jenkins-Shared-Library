@@ -1,3 +1,5 @@
+@Library('jenkins-shared-lib')_
+
 pipeline {
     agent none
     parameters {
@@ -8,12 +10,16 @@ pipeline {
         stage('Nginx Operation') {
             agent { label "${params.LABEL}" }
             steps {
-                serviceOperation (name: "nginx" action: "${params.ACTION}")  
+                service {
+                        name: "nginx" 
+                        action: "${params.ACTION}"
+                    }
+
             }
             post {
                 always {
                     script {
-                        serviceOperation.buildStatus()
+                        service.buildStatus("nginx", "${params.ACTION}")
                     }
                 }
             } 
