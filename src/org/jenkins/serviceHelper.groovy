@@ -16,7 +16,7 @@ void setBuildStatus(String action, int exitCode) {
         }
     } else if ("${action}" == 'stop') {
         if (exitCode != 0) {
-            println ("Script exit code: ${RETURN_STATUS}")
+            println ("Script exit code: ${exitCode}")
             currentBuild.result = 'SUCCESS'
         }
     }
