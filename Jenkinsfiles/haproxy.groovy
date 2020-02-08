@@ -1,5 +1,10 @@
 @Library('jenkins-shared-lib')_
 
+node {
+    buildName = "#${BUILD_NUMBER} haproxy"
+    buildDescription = "App node: ${params.APP_NODE}\nAction: ${params.ACTION}"
+}
+
 pipeline {
     agent none
     parameters {
@@ -10,13 +15,8 @@ pipeline {
     stages {
         stage('HaProxy Operation') {
             agent { label "${params.HAPROXY_NODE}" }
-
-            buildName = "#${BUILD_NUMBER} haproxy"
-            buildDescription = "App node: ${params.APP_NODE}\nAction: ${params.ACTION}"
-            
             steps {
                 haproxy app_node: "${params.APP_NODE}" ,action: "${params.ACTION}"
-
             } 
         }
     }

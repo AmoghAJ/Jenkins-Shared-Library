@@ -45,3 +45,7 @@ def serviceHandler(String service, String action, Boolean returnExitCode = false
         break
     }
 }
+
+def haproxyHandler(String appNode, String action) {
+    sh "sudo haproxyctl '${action} all ${appNode}'"
+}
