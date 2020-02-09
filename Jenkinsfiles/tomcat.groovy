@@ -7,16 +7,16 @@ pipeline {
         choice(name: 'ACTION', choices: ['start', 'stop', 'restart'], description: 'Action')
     }
     stages {
-        stage('Nginx Operation') {
+        stage('Tomcat Operation') {
             agent { label "${params.LABEL}" }
             steps {
-                service name: "nginx" ,action: "${params.ACTION}"
+                service name: "tomcat" ,action: "${params.ACTION}"
 
             }
             post {
                 always {
                     script {
-                        service.buildStatus("nginx", "${params.ACTION}")
+                        service.buildStatus("tomcat", "${params.ACTION}")
                     }
                 }
             } 

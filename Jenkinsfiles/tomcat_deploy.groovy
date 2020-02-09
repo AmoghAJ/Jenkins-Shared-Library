@@ -5,14 +5,14 @@ pipeline {
     parameters {
         string(name: 'SOFTWARE_S3_PATH', defaultValue: null, description: 'Software zip')
         string(name: 'APP_NODE', defaultValue: null, description: 'Node label')
-        string(name: 'VERSION', defaultValue: null, description: 'Action')
+        string(name: 'VERSION', defaultValue: null, description: 'Software version')
         choice(name: 'ENVIRONMENT', choices: ['qa', 'test', 'prod'], description: 'Environment')
     }
     stages {
         stage('Download Software') {
             agent { label "${params.APP_NODE}" }
             steps {
-                awss3cp s3_object           :   "${params.APP_NODE}" ,
+                awss3cp s3_object           :   "${params.SOFTWARE_S3_PATH}" ,
                         destination         :   "."
                 script {
                     buildName = "#${BUILD_NUMBER} tomcat-deploy ${params.ENVIRONMENT}"
@@ -30,7 +30,7 @@ pipeline {
         stage('Deploy') {
             agent { label "${params.APP_NODE}" }
             steps {
-                deploy
+                deploy()
             }
         }
         stage('Start Tomcat') {
