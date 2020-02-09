@@ -13,7 +13,7 @@ public void nginx(String web_node, String action) {
                        string(name: 'ACTION', value: action)]
 }
 
-public void haproxy(String s3_path, String app_node, String version, String env) {
+public void tomcat_deploy(String s3_path, String app_node, String version, String env) {
     build job: 'tomcat_deploy', 
           parameters: [string(name: 'SOFTWARE_S3_PATH', value: s3_path),
                        string(name: 'APP_NODE', value: app_node),
