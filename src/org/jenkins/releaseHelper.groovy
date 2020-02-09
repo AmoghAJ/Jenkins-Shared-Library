@@ -1,7 +1,7 @@
+package org.jenkins
+
 import helper
 import jobs
-
-package org.jenkins
 
 def resourceData() {
     helper = new helper()

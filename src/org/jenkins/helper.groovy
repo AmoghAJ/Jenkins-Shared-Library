@@ -1,5 +1,6 @@
-import groovy.json.JsonSlurper
 package org.jenkins
+
+import groovy.json.JsonSlurper
 
 public void deploy() {
     sh "rm -rf /opt/tomcat/webapps/ROOT/*"
