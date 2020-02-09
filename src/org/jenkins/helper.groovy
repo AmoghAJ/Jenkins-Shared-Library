@@ -14,7 +14,6 @@ private String resources() {
     return json_obj
 }
 
-@NonCPS
 public def resources_map() {
     def jsonSlurper = new JsonSlurper()
     String resource_string_out = resources()   
