@@ -1,7 +1,6 @@
 package org.jenkins
 
-// import groovy.json.JsonSlurper
-import groovy.json.JsonSlurperClassic
+import groovy.json.JsonSlurper
 
 public void deploy() {
     sh "rm -rf /opt/tomcat/webapps/ROOT/*"
@@ -17,8 +16,7 @@ private String resources() {
 
 @NonCPS
 public def resources_map() {
-    // def jsonSlurper = new JsonSlurper()
+    def jsonSlurper = new JsonSlurper()
     String resource_string_out = resources()   
-    // def out = jsonSlurper.parseText(resource_string_out)
-    return new groovy.json.JsonSlurperClassic().parseText(resource_string_out)
+    return new HashMap<>(jsonSlurper.parseText(resource_string_out))
 }
