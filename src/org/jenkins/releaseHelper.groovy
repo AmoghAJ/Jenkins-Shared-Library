@@ -1,7 +1,7 @@
 package org.jenkins
 
-import org.jenkins.helper
-import org.jenkins.jobs
+evaluate(new File("helper.groovy"))
+evaluate(new File("jobs.groovy"))
 
 def resourceData() {
     helper = new helper()
