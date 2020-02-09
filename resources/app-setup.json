@@ -1,0 +1,46 @@
+{
+    "apps": {
+      "name": "hello-world",
+      "infra": {
+        "qa": {
+          "lb": [
+            "q-lb0-helloworld"
+          ],
+          "web": [
+            "q-app0-helloworld",
+            "q-app1-helloworld"
+          ],
+          "app": [
+            "q-app0-helloworld",
+            "q-app1-helloworld"
+          ]
+        },
+        "test": {
+          "lb": [
+            "t-lb0-helloworld"
+          ],
+          "web": [
+            "t-app0-helloworld",
+            "t-app1-helloworld"
+          ],
+          "app": [
+            "t-app0-helloworld",
+            "t-app1-helloworld"
+          ]
+        },
+        "prod": {
+          "lb": [
+            "p-lb0-helloworld"
+          ],
+          "web": [
+            "p-app0-helloworld",
+            "p-app1-helloworld"
+          ],
+          "app": [
+            "p-app0-helloworld",
+            "p-app1-helloworld"
+          ]
+        }
+      }
+    }
+  }
