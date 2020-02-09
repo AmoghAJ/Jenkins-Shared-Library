@@ -10,12 +10,12 @@ public void deploy() {
 }
 
 private String resources() {
-    def jsonSlurper = new JsonSlurper()
     def json_obj = libraryResource resource: 'app-setup.json'
     return json_obj
 }
 
 public def resources_map() {
+    def jsonSlurper = new JsonSlurper()
     String resource_string_out = resources()   
     def out = jsonSlurper.parseText(json_obj)
     return out
