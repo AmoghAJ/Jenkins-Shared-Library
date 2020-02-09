@@ -17,6 +17,6 @@ private String resources() {
 public def resources_map() {
     def jsonSlurper = new JsonSlurper()
     String resource_string_out = resources()   
-    def out = jsonSlurper.parseText(json_obj)
+    def out = jsonSlurper.parseText(resource_string_out)
     return out
 }
