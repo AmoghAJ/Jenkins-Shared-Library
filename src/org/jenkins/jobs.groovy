@@ -52,14 +52,14 @@ class Job {
             'HAPROXY_NODE'  :   lb_node,
             'APP_NODE'      :   web_node,
             'ACTION'        :   action
-        ]
+        ])
     }
 
     def nginx(String web_node, String action) {
         buildRunner.runBuild('nginx_operation', [
             'LABEL'         :   web_node,
             'ACTION'        :   action
-        ]
+        ])
     }
     
     def tomcat_deploy(String s3_path, String app_node, String version, String env) {
@@ -68,7 +68,7 @@ class Job {
             'APP_NODE'          :   app_node,
             'VERSION'           :   version,
             'ENVIRONMENT'       :   env
-        ]
+        ])
     }
 
 }
