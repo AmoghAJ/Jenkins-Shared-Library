@@ -29,7 +29,7 @@ def release(String app, String s3_path, String version, String env) {
 }
 
 def releaseProd(String app, String s3_path, String version, String env, Boolean parallelDeployment = false) {
-    data = resourceData()
+    data = helper.resources_map()
     // Release on first node
     releaseSequence(data['apps'][app]['infra'][env]['lb'][0], 
                         data['apps'][app]['infra'][env]['web'][0], 
