@@ -43,14 +43,23 @@ def releaseProd(String app, String s3_path, String version, String env, Boolean 
     int nodes = data['apps'][app]['infra'][env]['app'].size() - 1
     if (parallelDeployment && nodes >= 2) {
         def nodesNumList = 1..nodes
-        def builds = nodesNumList.collectEntries {[data['apps'][app]['infra'][env]['app'][it],
-            releaseSequence(data['apps'][app]['infra'][env]['lb'][0], 
-                            data['apps'][app]['infra'][env]['web'][it], 
-                            data['apps'][app]['infra'][env]['app'][it],
-                            s3_path,
-                            version,
-                            env)
-        ]}
+        def builds = [:]
+        for(int x=1; x<=nodes; x++) {
+            builds.put(data['apps'][app]['infra'][env]['app'][x], releaseSequence(data['apps'][app]['infra'][env]['lb'][0], 
+                                                                                 data['apps'][app]['infra'][env]['web'][x], 
+                                                                                 data['apps'][app]['infra'][env]['app'][x],
+                                                                                 s3_path,
+                                                                                 version,
+                                                                                 env))
+        }
+        // def builds = nodesNumList.collectEntries {[data['apps'][app]['infra'][env]['app'][it],
+        //     releaseSequence(data['apps'][app]['infra'][env]['lb'][0], 
+        //                     data['apps'][app]['infra'][env]['web'][it], 
+        //                     data['apps'][app]['infra'][env]['app'][it],
+        //                     s3_path,
+        //                     version,
+        //                     env)
+        // ]}
         parallel(builds)
     } else {
         for(int x=1; x<=nodes; x++) {
