@@ -32,19 +32,18 @@ def releaseProd(String app, String s3_path, String version, String env, Boolean 
     helper  = new helper()
     data = helper.resources_map()
     // Release on first node
-    releaseSequence(data['apps'][app]['infra'][env]['lb'][0], 
-                        data['apps'][app]['infra'][env]['web'][0], 
-                        data['apps'][app]['infra'][env]['app'][0],
-                        s3_path,
-                        version,
-                        env)
+    // releaseSequence(data['apps'][app]['infra'][env]['lb'][0], 
+    //                     data['apps'][app]['infra'][env]['web'][0], 
+    //                     data['apps'][app]['infra'][env]['app'][0],
+    //                     s3_path,
+    //                     version,
+    //                     env)
     // Verification from MS after first node deployment
-    helper.msVerfiy()
+    // helper.msVerfiy()
     int nodes = data['apps'][app]['infra'][env]['app'].size() - 1
     if (parallelDeployment && nodes >= 2) {
-        def nodesNumList = 1..nodes
         def builds = [:]
-        for(int x=1; x<=nodes; x++) {
+        for(int x=0; x<=nodes; x++) {
             builds.put(data['apps'][app]['infra'][env]['app'][x], releaseSequence(data['apps'][app]['infra'][env]['lb'][0], 
                                                                                  data['apps'][app]['infra'][env]['web'][x], 
                                                                                  data['apps'][app]['infra'][env]['app'][x],
@@ -52,14 +51,7 @@ def releaseProd(String app, String s3_path, String version, String env, Boolean 
                                                                                  version,
                                                                                  env))
         }
-        // def builds = nodesNumList.collectEntries {[data['apps'][app]['infra'][env]['app'][it],
-        //     releaseSequence(data['apps'][app]['infra'][env]['lb'][0], 
-        //                     data['apps'][app]['infra'][env]['web'][it], 
-        //                     data['apps'][app]['infra'][env]['app'][it],
-        //                     s3_path,
-        //                     version,
-        //                     env)
-        // ]}
+        println(builds)
         parallel(builds)
     } else {
         for(int x=1; x<=nodes; x++) {
