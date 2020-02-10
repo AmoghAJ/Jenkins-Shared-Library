@@ -5,7 +5,7 @@ evaluate(new File("jobs.groovy"))
 
 public def helper  = new helper()
 
-private void releaseSequence(String lb_node, String web_node, String app_node, String s3_path, String version, String env) {
+private def releaseSequence(String lb_node, String web_node, String app_node, String s3_path, String version, String env) {
     jobs    = new jobs()
     jobs.haproxy(lb_node, web_node, 'disable')
     jobs.nginx(web_node, 'stop')
