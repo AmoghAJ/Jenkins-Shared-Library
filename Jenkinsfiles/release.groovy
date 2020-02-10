@@ -22,12 +22,22 @@ pipeline {
                 }
             }
             post {
-                always {
+                failure {
                     script {
-                        println "Slack notification"
+                        println "Slack faliure notification"
                     }
                 }
             } 
+        }
+        stage('Verify') {
+            steps {
+                helper.verifyHttpResp(params.APPLICATION, params.ENVIRONMENT)
+            }
+            post {
+                failure {
+                    println "Slack faliure notification"
+                }
+            }
         }
     }
 }

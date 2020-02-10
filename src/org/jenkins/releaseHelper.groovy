@@ -9,11 +9,13 @@ def resourceData() {
 }
 
 private void releaseSequence(String lb_node, String web_node, String app_node, String s3_path, String version, String env) {
-    jobs = new jobs()
+    jobs    = new jobs()
+    helper  = new helper()
     jobs.haproxy(lb_node, web_node, 'disable')
     jobs.nginx(web_node, 'stop')
     jobs.tomcat_deploy(s3_path, app_node, version, env)
     jobs.nginx(web_node, 'start')
+    helper.checkHttpResponse(web_node)
     jobs.haproxy(lb_node, web_node, 'enable')
 }
 

@@ -16,9 +16,23 @@ private String resources() {
 }
 
 public def resources_map() {
-    // def jsonSlurper = new JsonSlurper()
     def JsonSlurperClassic = new groovy.json.JsonSlurperClassic()
     String resource_string_out = resources()
     return new HashMap<> (JsonSlurperClassic.parseText(resource_string_out))    
-    // return new HashMap<>(jsonSlurper.parseText(resource_string_out))
+}
+
+public void checkHttpResponse(String web_node) {
+    node(web_node) {
+        httpResponse = sh returnStdout: true, script: "curl -o /dev/null -s -w '%{http_code}' http://localhost"
+        buildStatus = (httpResponse == '200' || httpResponse == '302') ? 'SUCCESS' : 'FAILURE'
+        currentBuild.result = buildStatus
+    }
+}
+
+public def verifyHttp(String app, String env) {
+    data = resources_map()
+    loadBalancers = data['apps'][app]['infra'][env]['lb']
+    loadBalancers.each { lb_node ->
+        checkHttpResponse(lb_node)
+    }
 }
