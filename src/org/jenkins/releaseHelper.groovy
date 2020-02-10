@@ -44,7 +44,7 @@ def releaseProd(String app, String s3_path, String version, String env, Boolean 
     if (parallelDeployment && nodes >= 2) {
         def builds = [:]
         for(int x=0; x<=nodes; x++) {
-            builds.put(data['apps'][app]['infra'][env]['app'][x], releaseSequence(data['apps'][app]['infra'][env]['lb'][0], 
+            builds.put("Deployment on ${data['apps'][app]['infra'][env]['app'][x]}", releaseSequence(data['apps'][app]['infra'][env]['lb'][0], 
                                                                                  data['apps'][app]['infra'][env]['web'][x], 
                                                                                  data['apps'][app]['infra'][env]['app'][x],
                                                                                  s3_path,
@@ -52,7 +52,7 @@ def releaseProd(String app, String s3_path, String version, String env, Boolean 
                                                                                  env))
         }
         println(builds)
-        parallel(builds)
+        parallel builds
     } else {
         for(int x=1; x<=nodes; x++) {
             releaseSequence(data['apps'][app]['infra'][env]['lb'][0], 
