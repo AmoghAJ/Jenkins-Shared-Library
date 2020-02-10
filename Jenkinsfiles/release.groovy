@@ -31,7 +31,9 @@ pipeline {
         }
         stage('Verify') {
             steps {
-                helper.verifyHttpResp(params.APPLICATION, params.ENVIRONMENT)
+                script{
+                    misc.verifyHttpResp(params.APPLICATION, params.ENVIRONMENT)
+                }
             }
             post {
                 failure {

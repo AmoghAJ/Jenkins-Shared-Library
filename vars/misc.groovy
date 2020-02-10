@@ -13,4 +13,3 @@ def verifyHttpResp(String web_node) {
     helper = helperObj()
     helper.checkHttpResponse(web_node)
 }
-

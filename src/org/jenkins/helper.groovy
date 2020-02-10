@@ -24,12 +24,13 @@ public def resources_map() {
 public void checkHttpResponse(String web_node) {
     node(web_node) {
         httpResponse = sh returnStdout: true, script: "curl -o /dev/null -s -w '%{http_code}' http://localhost"
+        println "Server:${web_node}, Http response: ${httpResponse}"
         buildStatus = (httpResponse == '200' || httpResponse == '302') ? 'SUCCESS' : 'FAILURE'
         currentBuild.result = buildStatus
     }
 }
 
-public def verifyHttp(String app, String env) {
+public void verifyHttp(String app, String env) {
     data = resources_map()
     loadBalancers = data['apps'][app]['infra'][env]['lb']
     loadBalancers.each { lb_node ->
