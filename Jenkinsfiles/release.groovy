@@ -42,9 +42,24 @@ pipeline {
             }
         }
         stage('Manual verification') {
+            when {
+                expression { 
+                    params.ENVIRONMENT == 'test' ||
+                    params.ENVIRONMENT == 'prod'
+                }
+            }
             steps{
                 script{
                     misc.msVerify()
+                }
+            }
+            post {
+                success {
+                    script {
+                        if(${params.ENVIRONMENT} == 'prod') {
+                            println "Slack notification: Release deployed to production."
+                        }
+                    }
                 }
             }
         }
