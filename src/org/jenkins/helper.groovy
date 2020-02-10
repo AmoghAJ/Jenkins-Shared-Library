@@ -38,7 +38,7 @@ public void verifyHttp(String app, String env) {
     }
 }
 
-public def msVerfiy() {
+public void msVerfiy() {
     try {
         input(message: 'Sign off from MS post sanity check?', ok: "Yes")
     } catch(err) {
