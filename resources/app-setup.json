@@ -34,11 +34,15 @@
 					],
 					"web": [
 						"p-app0-helloworld",
-						"p-app1-helloworld"
+						"p-app1-helloworld",
+						"p-app2-helloworld",
+						"p-app3-helloworld"
 					],
 					"app": [
 						"p-app0-helloworld",
-						"p-app1-helloworld"
+						"p-app1-helloworld",
+						"p-app2-helloworld",
+						"p-app3-helloworld"
 					]
 				}
 			}
