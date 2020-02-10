@@ -41,5 +41,12 @@ pipeline {
                 }
             }
         }
+        stage('Manual verification') {
+            steps{
+                script{
+                    misc.msVerify()
+                }
+            }
+        }
     }
 }

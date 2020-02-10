@@ -31,7 +31,6 @@ def release(String app, String s3_path, String version, String env) {
                         version,
                         env)
     }
-    helper.msVerfiy()
 }
 
 def releaseProd(String app, String s3_path, String version, String env) {
