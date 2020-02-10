@@ -37,3 +37,15 @@ public void verifyHttp(String app, String env) {
         checkHttpResponse(lb_node)
     }
 }
+
+public def msVerfiy() {
+    try {
+        userInput = input(id: 'userInput', message: 'Is everything looks fine after release?', ok: "Yes",
+                    parameters: [booleanParam(description: 'Please check this if everything is good', name: 'Sanity Check', defaultValue: false)
+    } catch(err) {
+        def user = err.getCauses()[0].getUser()
+        userInput = false
+        currentBuild.result = 'Unstable'
+        echo "Looks like some issues are found during the monitoring by MS, triggering messge to SDPSP for rollback"
+    }
+}

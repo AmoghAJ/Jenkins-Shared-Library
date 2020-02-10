@@ -3,6 +3,8 @@ package org.jenkins
 evaluate(new File("helper.groovy"))
 evaluate(new File("jobs.groovy"))
 
+public def helper  = new helper()
+
 def resourceData() {
     helper = new helper()
     return helper.resources_map()
@@ -10,7 +12,6 @@ def resourceData() {
 
 private void releaseSequence(String lb_node, String web_node, String app_node, String s3_path, String version, String env) {
     jobs    = new jobs()
-    helper  = new helper()
     jobs.haproxy(lb_node, web_node, 'disable')
     jobs.nginx(web_node, 'stop')
     jobs.tomcat_deploy(s3_path, app_node, version, env)
@@ -30,4 +31,10 @@ def release(String app, String s3_path, String version, String env) {
                         version,
                         env)
     }
+    helper.msVerfiy()
+}
+
+def releaseProd(String app, String s3_path, String version, String env) {
+    data = resourceData()
+    int nodes = data['apps'][app]['infra'][env]['app'].size() - 1
 }
