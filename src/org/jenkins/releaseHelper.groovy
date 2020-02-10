@@ -16,7 +16,8 @@ private void releaseSequence(String lb_node, String web_node, String app_node, S
 }
 
 private def releaseSequenceParallel(String lb_node, String web_node, String app_node, String s3_path, String version, String env) {
-    jobs    = new jobs()
+    jobHelper   = new jobs()
+    jobs        = jobHelper.createJob(this)
     def executionSeq = [
         jobs.haproxy(lb_node, web_node, 'disable'),
         jobs.nginx(web_node, 'stop'),
