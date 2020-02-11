@@ -10,9 +10,9 @@ pipeline {
         string(name: 'SOFTWARE_S3_PATH', defaultValue: null, description: 'Software zip')
         string(name: 'VERSION', defaultValue: null, description: 'software version')
         string(name: 'APPLICATION', defaultValue: null, description: 'Application name')
-        booleanParam(name: 'RELEASE_ON_QA', defaultValue: true, description: 'Uncheck if doesn\'t want deployment on QA')
-        booleanParam(name: 'RELEASE_ON_TEST', defaultValue: true, description: 'Uncheck if doesn\'t want deployment on TEST')
-        booleanParam(name: 'RELEASE_ON_PROD', defaultValue: true, description: 'Uncheck if doesn\'t want deployment on PROD')
+        booleanParam(name: 'RELEASE_ON_QA', defaultValue: true, description: 'Uncheck if does not want deployment on QA')
+        booleanParam(name: 'RELEASE_ON_TEST', defaultValue: true, description: 'Uncheck if does not want deployment on TEST')
+        booleanParam(name: 'RELEASE_ON_PROD', defaultValue: true, description: 'Uncheck if does not want deployment on PROD')
     }
     stages {
         stage('Deploy to QA') {
