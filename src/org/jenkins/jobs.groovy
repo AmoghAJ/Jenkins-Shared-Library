@@ -63,7 +63,7 @@ class Job {
     }
     
     def tomcat_deploy(String s3_path, String app_node, String version, String env) {
-        buildRunner.runBuild('haproxy_operations', [
+        buildRunner.runBuild('tomcat_deploy', [
             'SOFTWARE_S3_PATH'  :   s3_path,
             'APP_NODE'          :   app_node,
             'VERSION'           :   version,
