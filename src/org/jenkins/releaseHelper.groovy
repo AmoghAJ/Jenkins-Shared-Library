@@ -80,7 +80,7 @@ def releaseProd(String app, String s3_path, String version, String env, Boolean 
         }
         println(builds)
         println builds.getClass()
-        // parallel(builds) 
+        parallel(builds) 
     }
     // } else {
     //     for(int x=1; x<=nodes; x++) {
