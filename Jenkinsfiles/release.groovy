@@ -2,7 +2,7 @@
 
 pipeline {
     agent none
-    option {
+    options {
         buildDiscarder(logRotator(numToKeepStr: '10'))
         timestamps()
         parallelsAlwaysFailFast()
