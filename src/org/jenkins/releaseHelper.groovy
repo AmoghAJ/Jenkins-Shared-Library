@@ -58,36 +58,26 @@ def releaseProd(String app, String s3_path, String version, String env, Boolean 
     if (parallelDeployment && nodes >= 2) {
         jobHelper   = new jobs()
         jobs        = jobHelper.createJob(this)
-        def builds  = [:]
+        def builds  = []
         for(int x=0; x<=nodes; x++) {
-            // builds.puts("Deployment for ${data['apps'][app]['infra'][env]['app'][x]}", [jobs.nginx(data['apps'][app]['infra'][env]['web'][x], 'stop')
-            // ,jobs.nginx(data['apps'][app]['infra'][env]['web'][x], 'start')])
-            parallel(
-            "x": {
-                [jobs.nginx(data['apps'][app]['infra'][env]['web'][x], 'stop'), jobs.nginx(data['apps'][app]['infra'][env]['web'][x], 'start')]
-            } ,
-            "${x} ends": {
-                sleep 15
-                helper.checkHttpResponse(data['apps'][app]['infra'][env]['web'][x])
-            }
-            )
-            // builds.put("Deployment on ${data['apps'][app]['infra'][env]['app'][x]}", releaseSequence(data['apps'][app]['infra'][env]['lb'][0], 
-                                                                                //  data['apps'][app]['infra'][env]['web'][x], 
-                                                                                //  data['apps'][app]['infra'][env]['app'][x],
-                                                                                //  s3_path,
-                                                                                //  version,
+
+            def lbNode      = data['apps'][app]['infra'][env]['lb'][0]
+            def webNode = data['apps'][app]['infra'][env]['web'][x]
+            def appNode = data['apps'][app]['infra'][env]['app'][x]
             
-                                                                                //  env))
-            // builds.puts("Deployment for ${data['apps'][app]['infra'][env]['app'][x]}", releaseSequenceParallel( data['apps'][app]['infra'][env]['lb'][0], 
-                        //                                                                                         data['apps'][app]['infra'][env]['web'][x], 
-                        //                                                                                         data['apps'][app]['infra'][env]['app'][x],
-                        //                                                                                         s3_path,
-                        //                                                                                         version,
-                        //                                                                                         env)
-                        // ) 
+            def releaseSeq = ["Deploy ${appNode}": {
+                                    [jobs.haproxy(lbNode, webNode, 'disable'),
+                                    jobs.nginx(webNode, 'stop'),
+                                    jobs.tomcat_deploy(s3_path, appNode, version, env),
+                                    jobs.nginx(webNode, 'start'),
+                                    helper.checkHttpResponse(webNode),
+                                    jobs.haproxy(lbNode, webNode, 'enable')]
+                                }]
+            
+            builds.add(releaseSeq)
         }
         println(builds)
-        // parallel builds 
+        parallel(builds) 
     }
     // } else {
     //     for(int x=1; x<=nodes; x++) {
