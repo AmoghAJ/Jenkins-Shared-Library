@@ -71,12 +71,12 @@ def releaseProd(String app, String s3_path, String version, String env, Boolean 
             
                                                                                 //  env))
             // builds.puts("Deployment for ${data['apps'][app]['infra'][env]['app'][x]}", releaseSequenceParallel( data['apps'][app]['infra'][env]['lb'][0], 
-                                                                                                                data['apps'][app]['infra'][env]['web'][x], 
-                                                                                                                data['apps'][app]['infra'][env]['app'][x],
-                                                                                                                s3_path,
-                                                                                                                version,
-                                                                                                                env)
-                        ) 
+                        //                                                                                         data['apps'][app]['infra'][env]['web'][x], 
+                        //                                                                                         data['apps'][app]['infra'][env]['app'][x],
+                        //                                                                                         s3_path,
+                        //                                                                                         version,
+                        //                                                                                         env)
+                        // ) 
         }
         println(builds)
         parallel builds }
