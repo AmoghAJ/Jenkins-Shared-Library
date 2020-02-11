@@ -65,7 +65,7 @@ def releaseProd(String app, String s3_path, String version, String env, Boolean 
             parallel(
             "x": {
                 jobs.nginx(data['apps'][app]['infra'][env]['web'][x], 'stop')
-            } 
+            } ,
             "${x} ends": {
                 jobs.nginx(data['apps'][app]['infra'][env]['web'][x], 'start')
             }
