@@ -82,9 +82,10 @@ def releaseProd(String app, String s3_path, String version, String env, Boolean 
                         //                                                                                         version,
                         //                                                                                         env)
                         // ) 
-        // }
+        }
         println(builds)
-        // parallel builds }
+        // parallel builds 
+    }
     // } else {
     //     for(int x=1; x<=nodes; x++) {
     //         releaseSequence(data['apps'][app]['infra'][env]['lb'][0], 
