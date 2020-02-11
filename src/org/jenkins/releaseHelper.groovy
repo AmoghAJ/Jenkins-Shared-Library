@@ -77,7 +77,7 @@ def releaseFirstVerifyRestParallel(String app, String s3_path, String version, S
     def firstWebNode = data['apps'][app]['infra'][env]['web'][0]
     def firstAppNode = data['apps'][app]['infra'][env]['app'][0]
     // Release on first node
-    releaseSequence(firstLbNode, firstWebNode, firstAppNode, s3_path, versionm env)
+    releaseSequence(firstLbNode, firstWebNode, firstAppNode, s3_path, version, env)
 
     // Verification from MS after first node deployment
     helper  = new helper()
