@@ -79,7 +79,8 @@ def releaseProd(String app, String s3_path, String version, String env, Boolean 
             // builds.add(releaseSeq)
         }
         println(builds)
-        parallel(builds) 
+        println builds.getClass()
+        // parallel(builds) 
     }
     // } else {
     //     for(int x=1; x<=nodes; x++) {
