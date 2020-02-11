@@ -40,26 +40,22 @@ def releaseAllParallel(String app, String s3_path, String version, String env) {
 
     for(int x=0; x<=nodes; x++) {
 
-            def lbNode  = data['apps'][app]['infra'][env]['lb'][0]
-            def webNode = data['apps'][app]['infra'][env]['web'][x]
-            def appNode = data['apps'][app]['infra'][env]['app'][x]
-            
-            def releaseSeq =  {[
-                                    jobs.haproxy(lbNode, webNode, 'disable'),
-                                    jobs.nginx(webNode, 'stop'),
-                                    jobs.tomcat_deploy(s3_path, appNode, version, env),
-                                    jobs.nginx(webNode, 'start'),
-                                    helper.checkHttpResponse(webNode),
-                                    jobs.haproxy(lbNode, webNode, 'enable')
-                                ]}
-            
-            builds["Deploy ${appNode}"] = releaseSeq
-            
-        }
-
-        parallel(builds) 
+        def lbNode  = data['apps'][app]['infra'][env]['lb'][0]
+        def webNode = data['apps'][app]['infra'][env]['web'][x]
+        def appNode = data['apps'][app]['infra'][env]['app'][x]
+        
+        def releaseSeq =  {[
+                                jobs.haproxy(lbNode, webNode, 'disable'),
+                                jobs.nginx(webNode, 'stop'),
+                                jobs.tomcat_deploy(s3_path, appNode, version, env),
+                                jobs.nginx(webNode, 'start'),
+                                helper.checkHttpResponse(webNode),
+                                jobs.haproxy(lbNode, webNode, 'enable')
+                            ]}
+        
+        builds["Deploy ${appNode}"] = releaseSeq    
     }
-    
+    parallel(builds) 
 }
 
 def releaseAllSequential(String app, String s3_path, String version, String env) {
