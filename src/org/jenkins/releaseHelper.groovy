@@ -58,14 +58,14 @@ def releaseProd(String app, String s3_path, String version, String env, Boolean 
     if (parallelDeployment && nodes >= 2) {
         jobHelper   = new jobs()
         jobs        = jobHelper.createJob(this)
-        def builds  = [:]
+        def builds  = [x]
         for(int x=0; x<=nodes; x++) {
 
             def lbNode      = data['apps'][app]['infra'][env]['lb'][0]
             def webNode = data['apps'][app]['infra'][env]['web'][x]
             def appNode = data['apps'][app]['infra'][env]['app'][x]
             
-            def releaseSeq =  [{
+            def releaseSeq =  ["Deploy ${appNode}": {
                                     jobs.haproxy(lbNode, webNode, 'disable'),
                                     jobs.nginx(webNode, 'stop'),
                                     jobs.tomcat_deploy(s3_path, appNode, version, env),
@@ -74,7 +74,8 @@ def releaseProd(String app, String s3_path, String version, String env, Boolean 
                                     jobs.haproxy(lbNode, webNode, 'enable')
                                 }]
             
-            builds.put("Deploy ${appNode}", releaseSeq)
+            // builds.put("Deploy ${appNode}", releaseSeq)
+            builds.add(releaseSeq)
         }
         println(builds)
         parallel(builds) 
