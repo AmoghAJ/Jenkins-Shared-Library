@@ -34,11 +34,12 @@ public void release(String app, String s3_path, String version, String env) {
 }
 
 def releaseAllParallel(String app, String s3_path, String version, String env) {
+    data        = helper.resources_map()
     jobHelper   = new jobs()
     jobs        = jobHelper.createJob(this)
     def builds  = [:]
+    int nodes   = data['apps'][app]['infra'][env]['app'].size() - 1
     
-    int nodes = data['apps'][app]['infra'][env]['app'].size() - 1
     for(int x=0; x<=nodes; x++) {
 
         def lbNode  = data['apps'][app]['infra'][env]['lb'][0]
