@@ -45,7 +45,7 @@ private void releaseAllParallel(String app, String s3_path, String version, Stri
         def lbNode  = data['apps'][app]['infra'][env]['lb'][0]
         def webNode = data['apps'][app]['infra'][env]['web'][x]
         def appNode = data['apps'][app]['infra'][env]['app'][x]
-        
+        println("\nLB:${lbNode}\n" + "APP:${appNode}\n" +"WEB:${webNode}\n")
         def releaseSeq =  {[
                                 jobs.haproxy(lbNode, webNode, 'disable'),
                                 jobs.nginx(webNode, 'stop'),
