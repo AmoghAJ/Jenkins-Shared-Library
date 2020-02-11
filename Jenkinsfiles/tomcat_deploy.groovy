@@ -2,6 +2,10 @@
 
 pipeline {
     agent none
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        timestamps()
+    }
     parameters {
         string(name: 'SOFTWARE_S3_PATH', defaultValue: null, description: 'Software zip')
         string(name: 'APP_NODE', defaultValue: null, description: 'Node label')
@@ -15,8 +19,8 @@ pipeline {
                 awss3cp s3_object           :   "${params.SOFTWARE_S3_PATH}" ,
                         destination         :   "."
                 script {
-                    buildName = "#${BUILD_NUMBER} tomcat-deploy ${params.ENVIRONMENT}"
-                    buildDescription = "Version: ${params.VERSION}"
+                    currentBuild.displayName = "#${BUILD_NUMBER} tomcat-deploy ${params.ENVIRONMENT}"
+                    currentBuild.description = "Version: ${params.VERSION}"
                 } 
             } 
         }
