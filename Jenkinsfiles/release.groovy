@@ -2,6 +2,11 @@
 
 pipeline {
     agent none
+    option {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        timestamps()
+        parallelsAlwaysFailFast()
+    }
     parameters {
         string(name: 'SOFTWARE_S3_PATH', defaultValue: null, description: 'Software zip')
         string(name: 'VERSION', defaultValue: null, description: 'software version')
@@ -17,19 +22,19 @@ pipeline {
                         version: "${params.VERSION}",
                         environment: "${params.ENVIRONMENT}"
                 script {
-                    buildName = "#${BUILD_NUMBER} tomcat-deploy ${params.ENVIRONMENT}"
-                    buildDescription = "Version: ${params.VERSION}"
+                    currentBuild.displayName = "#${BUILD_NUMBER}-${params.ENVIRONMENT}"
+                    currentBuild.description = "Application:${params.APPLICATION}\nVersion: ${params.VERSION}"
                 }
             }
             post {
                 failure {
                     script {
-                        println "Slack faliure notification"
+                        println "Slack faliure notification: Failure in release stage"
                     }
                 }
             } 
         }
-        stage('Verify') {
+        stage('Auto Verification') {
             steps {
                 script{
                     misc.verifyHttpResp(params.APPLICATION, params.ENVIRONMENT)
@@ -37,7 +42,7 @@ pipeline {
             }
             post {
                 failure {
-                    println "Slack faliure notification"
+                    println "Slack faliure notification: Auto Verification failed"
                 }
             }
         }
@@ -54,9 +59,12 @@ pipeline {
                 }
             }
             post {
+                failure {
+                    println "Slack faliure notification: Manual Verification failed"
+                }
                 success {
                     script {
-                        if(${params.ENVIRONMENT} == 'prod') {
+                        if(params.ENVIRONMENT == 'prod') {
                             println "Slack notification: Release deployed to production."
                         }
                     }
