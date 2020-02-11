@@ -82,7 +82,7 @@ def releaseProd(String app, String s3_path, String version, String env, Boolean 
                         //                                                                                         version,
                         //                                                                                         env)
                         // ) 
-        }
+        // }
         println(builds)
         // parallel builds }
     // } else {
