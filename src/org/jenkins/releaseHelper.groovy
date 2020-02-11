@@ -56,8 +56,13 @@ def releaseProd(String app, String s3_path, String version, String env, Boolean 
     // helper.msVerfiy()
     int nodes = data['apps'][app]['infra'][env]['app'].size() - 1
     if (parallelDeployment && nodes >= 2) {
-        def builds = [:]
+        jobHelper   = new jobs()
+        jobs        = jobHelper.createJob(this)
+        def builds  = [:]
         for(int x=0; x<=nodes; x++) {
+            builds.puts("Deployment for ${data['apps'][app]['infra'][env]['app'][x]}", [jobs.nginx(data['apps'][app]['infra'][env]['web'][x], 'stop')
+            ,jobs.nginx(data['apps'][app]['infra'][env]['web'][x], 'start')])
+
             // builds.put("Deployment on ${data['apps'][app]['infra'][env]['app'][x]}", releaseSequence(data['apps'][app]['infra'][env]['lb'][0], 
                                                                                 //  data['apps'][app]['infra'][env]['web'][x], 
                                                                                 //  data['apps'][app]['infra'][env]['app'][x],
@@ -65,7 +70,7 @@ def releaseProd(String app, String s3_path, String version, String env, Boolean 
                                                                                 //  version,
             
                                                                                 //  env))
-            builds.puts("Deployment for ${data['apps'][app]['infra'][env]['app'][x]}", releaseSequenceParallel( data['apps'][app]['infra'][env]['lb'][0], 
+            // builds.puts("Deployment for ${data['apps'][app]['infra'][env]['app'][x]}", releaseSequenceParallel( data['apps'][app]['infra'][env]['lb'][0], 
                                                                                                                 data['apps'][app]['infra'][env]['web'][x], 
                                                                                                                 data['apps'][app]['infra'][env]['app'][x],
                                                                                                                 s3_path,
