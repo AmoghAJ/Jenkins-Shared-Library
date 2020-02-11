@@ -68,7 +68,7 @@ def releaseProd(String app, String s3_path, String version, String env, Boolean 
             } ,
             "${x} ends": {
                 sleep 15
-                helper.checkHttpResponse(web_node)
+                helper.checkHttpResponse(data['apps'][app]['infra'][env]['web'][x])
             }
             )
             // builds.put("Deployment on ${data['apps'][app]['infra'][env]['app'][x]}", releaseSequence(data['apps'][app]['infra'][env]['lb'][0], 
