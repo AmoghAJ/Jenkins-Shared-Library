@@ -66,12 +66,12 @@ def releaseProd(String app, String s3_path, String version, String env, Boolean 
             def appNode = data['apps'][app]['infra'][env]['app'][x]
             
             def releaseSeq =  [{
-                                    [jobs.haproxy(lbNode, webNode, 'disable'),
+                                    jobs.haproxy(lbNode, webNode, 'disable'),
                                     jobs.nginx(webNode, 'stop'),
                                     jobs.tomcat_deploy(s3_path, appNode, version, env),
                                     jobs.nginx(webNode, 'start'),
                                     helper.checkHttpResponse(webNode),
-                                    jobs.haproxy(lbNode, webNode, 'enable')]
+                                    jobs.haproxy(lbNode, webNode, 'enable')
                                 }]
             
             builds.put("Deploy ${appNode}", releaseSeq)
