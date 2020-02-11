@@ -3,9 +3,8 @@ package org.jenkins
 evaluate(new File("helper.groovy"))
 evaluate(new File("jobs.groovy"))
 
-public def helper  = new helper()
-
 private void releaseSequence(String lb_node, String web_node, String app_node, String s3_path, String version, String env) {
+    helper  = new helper()
     jobs    = new jobs()
     jobs    = jobHelper.createJob(this)
     jobs.haproxy(lb_node, web_node, 'disable')
@@ -33,7 +32,8 @@ public void release(String app, String s3_path, String version, String env) {
 
 }
 
-def releaseAllParallel(String app, String s3_path, String version, String env) {
+private void releaseAllParallel(String app, String s3_path, String version, String env) {
+    helper      = new helper()
     data        = helper.resources_map()
     jobHelper   = new jobs()
     jobs        = jobHelper.createJob(this)
@@ -60,8 +60,9 @@ def releaseAllParallel(String app, String s3_path, String version, String env) {
     parallel(builds) 
 }
 
-def releaseAllSequential(String app, String s3_path, String version, String env) {
-    data = helper.resources_map()
+private void releaseAllSequential(String app, String s3_path, String version, String env) {
+    helper  = new helper()
+    data    = helper.resources_map()
     int nodes = data['apps'][app]['infra'][env]['app'].size() - 1
     for(int x=0; x<=nodes; x++) {
         def lbNode  = data['apps'][app]['infra'][env]['lb'][0]
@@ -72,8 +73,9 @@ def releaseAllSequential(String app, String s3_path, String version, String env)
     }
 }
 
-def releaseFirstVerifyRestParallel(String app, String s3_path, String version, String env) {
-    data = helper.resources_map()
+private void releaseFirstVerifyRestParallel(String app, String s3_path, String version, String env) {
+    helper  = new helper()
+    data    = helper.resources_map()
     
     def firstLbNode  = data['apps'][app]['infra'][env]['lb'][0]
     def firstWebNode = data['apps'][app]['infra'][env]['web'][0]
@@ -82,7 +84,6 @@ def releaseFirstVerifyRestParallel(String app, String s3_path, String version, S
     releaseSequence(firstLbNode, firstWebNode, firstAppNode, s3_path, version, env)
 
     // Verification from MS after first node deployment
-    helper  = new helper()
     helper.msVerfiy()
 
     int nodes = data['apps'][app]['infra'][env]['app'].size() - 1
