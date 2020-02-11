@@ -62,14 +62,14 @@ def releaseProd(String app, String s3_path, String version, String env, Boolean 
         for(int x=0; x<=nodes; x++) {
             // builds.puts("Deployment for ${data['apps'][app]['infra'][env]['app'][x]}", [jobs.nginx(data['apps'][app]['infra'][env]['web'][x], 'stop')
             // ,jobs.nginx(data['apps'][app]['infra'][env]['web'][x], 'start')])
-            parallel(
+            parallel{
             stage("x") {
                 jobs.nginx(data['apps'][app]['infra'][env]['web'][x], 'stop')
             } 
             stage("${x} ends") {
                 jobs.nginx(data['apps'][app]['infra'][env]['web'][x], 'start')
             }
-            )
+            }
             // builds.put("Deployment on ${data['apps'][app]['infra'][env]['app'][x]}", releaseSequence(data['apps'][app]['infra'][env]['lb'][0], 
                                                                                 //  data['apps'][app]['infra'][env]['web'][x], 
                                                                                 //  data['apps'][app]['infra'][env]['app'][x],
