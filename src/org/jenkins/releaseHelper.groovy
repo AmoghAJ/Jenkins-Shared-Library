@@ -58,7 +58,7 @@ def releaseProd(String app, String s3_path, String version, String env, Boolean 
     if (parallelDeployment && nodes >= 2) {
         jobHelper   = new jobs()
         jobs        = jobHelper.createJob(this)
-        def builds  = [x]
+        def builds  = []
         for(int x=0; x<=nodes; x++) {
 
             def lbNode      = data['apps'][app]['infra'][env]['lb'][0]
