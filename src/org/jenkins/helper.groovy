@@ -45,3 +45,26 @@ public void msVerfiy() {
         error('"Looks like some issues are found during the monitoring by MS, triggering messge to SDPSP for rollback"')
     }
 }
+
+public String getGitCommitHash() {
+    return sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
+}
+
+public String getZipFilename(String application, String gitCommit) {
+    data = resources_map()
+    String zipFile = data['apps'][application]['zip']
+    return zipFile.replaceAll('#commit-hash#', "${gitCommit}")
+}
+
+public String getArtifactBucket(String application) {
+    data = resources_map()
+    return data['apps'][application]['zip']
+}
+
+private String padS3bucketName(String bucketName) {
+    return "s3://${bucketName}"
+}
+
+private void zipArchive(String zipName, String zipContent) {
+    sh "zip ${zipName} ${zipContent}"
+}

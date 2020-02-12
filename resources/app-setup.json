@@ -1,6 +1,8 @@
 {
 	"apps": {
 		"hello-world": {
+			"artifacts-bucket": "hello-world-ci-artifacts",
+			"zip":"hello-world-#commit-hash#.zip",
 			"infra": {
 				"qa": {
 					"lb": [
