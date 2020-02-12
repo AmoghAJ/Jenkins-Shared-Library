@@ -40,7 +40,7 @@ public void verifyHttp(String app, String env) {
 
 public void msVerfiy() {
     try {
-        input(message: 'Sign off from MS post sanity check?', ok: "Yes")
+        input(message: 'Sign off from MS post sanity check?', ok: "Yes", submitter: "ms")
     } catch(err) {
         error('"Looks like some issues are found during the monitoring by MS, triggering messge to SDPSP for rollback"')
     }
