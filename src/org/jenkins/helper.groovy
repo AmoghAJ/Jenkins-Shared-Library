@@ -72,10 +72,11 @@ private void zipArchive(String zipName, String zipContent) {
 
 private String extractVersionNumber() {
     String commitMsg = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim().toLowerCase()
+    String version = ''
     try {
         extractVersion = { it.split("version:")[1] }
         String versionWithBrackets = commitMsg.split("[\\[\\]]")[1]
-        String version = extractVersion(versionWithBrackets).trim()
+        version = extractVersion(versionWithBrackets).trim()
     } catch(ArrayIndexOutOfBoundsException err) {
         error("Version not specified please specify version number in commit messege in format [Version:1.0]")
     }
