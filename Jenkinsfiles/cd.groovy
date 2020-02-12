@@ -28,8 +28,8 @@ pipeline {
                              string(name: 'ENVIRONMENT', value: "qa"),
                              string(name: 'APPLICATION', value: "${params.APPLICATION}")]
                 script {
-                    currentBuild.displayName = "#${BUILD_NUMBER}-${params.ENVIRONMENT}"
-                    currentBuild.description = "Application:${params.APPLICATION}\nVersion: ${params.VERSION}"
+                    currentBuild.displayName = "#${BUILD_NUMBER}"
+                    currentBuild.description = "Application:${params.APPLICATION}\nVersion: ${params.VERSION}\nDeployment:\nQA:${params.RELEASE_ON_QA}\nTest:${params.RELEASE_ON_TEST}\nProd:${params.RELEASE_ON_PROD}"
                 }
             }
             post {
