@@ -9,5 +9,5 @@ private def mavenObj() {
 def call(Map StageParams) {
     mvnObj    = mavenObj()
     arguments = StageParams.action
-    mvnOperation(arguments)
+    mvnObj.mvnOperation(arguments)
 }
