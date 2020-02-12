@@ -8,7 +8,7 @@ def call(StageParameters) {
         agent { label 'ci' }
         options { 
             timestamps()
-            buildDiscarder(logRotator(numToKeepStr: '5')) 
+            buildDiscarder(logRotator(numToKeepStr: '10')) 
             }
         environment{
             APPLCICATION   = 'hello-world'
@@ -37,12 +37,15 @@ def call(StageParameters) {
                     }
                 }
             }
-            stage('Integration Test') {
+            stage('Automated Test') {
                 when {
                     branch 'master'
                 }
                 steps {
-                    println 'Integration testing'
+                    release application: APPLCICATION, 
+                            s3_software: "${misc.s3BucketPadding(S3_BUCKET)}${ARTIFACT_ZIP}", 
+                            version: VERSION, 
+                            environment: 'ci'
                 }
             }
             stage('Schedule release') {

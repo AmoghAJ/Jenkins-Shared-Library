@@ -4,6 +4,14 @@
 			"artifacts-bucket": "hello-world-ci-artifacts",
 			"zip":"hello-world-#commit-hash#.zip",
 			"infra": {
+				"ci": {
+					"web": [
+						"buld-web"
+					],
+					"app": [
+						"buld-app"
+					]
+				},
 				"qa": {
 					"lb": [
 						"q-lb0-helloworld"
