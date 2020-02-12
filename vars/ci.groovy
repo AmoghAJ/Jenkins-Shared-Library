@@ -58,7 +58,7 @@ def call(StageParameters) {
                         println config.deploy.qa
                         println config.deploy.test
                         println config.deploy.prod
-                        println "Type: $(config.deploy.qa).getClass()"
+                        // println "Type: $(config.deploy.qa).getClass()"
                     }
                 }
             }
