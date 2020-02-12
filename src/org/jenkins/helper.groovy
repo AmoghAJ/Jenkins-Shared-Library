@@ -47,6 +47,18 @@ public void msVerfiy() {
     }
 }
 
+private String getDateInputForRelease() {
+    try {
+        def inputDate = input(id: 'inputDate', message: 'Please specify date for the release', ok: "Submit",
+                      parameters: [string(defaultValue	: null,
+                                          description	: 'Date formate: YYYYMMDD',
+                                          name			: 'date')])
+        return inputDate
+    } catch(err) {
+        error("This release would not be auto scheduled for deployment.")
+    }
+}
+
 public String getGitCommitHash() {
     return sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
 }
@@ -76,7 +88,6 @@ private String extractVersionNumber() {
     try {
         extractVersion = { it.split("version:")[1] }
         String versionWithBrackets = commitMsg.split("[\\[\\]]")[1]
-        println versionWithBrackets
         version = extractVersion(versionWithBrackets).trim()
     } catch(ArrayIndexOutOfBoundsException err) {
         error("Version not specified please specify version number in commit messege in format [Version:1.0]")

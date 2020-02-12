@@ -19,6 +19,11 @@ def msVerify(){
     helper.msVerfiy()
 }
 
+def rmDateInput() {
+    helper = helperObj()
+    return helper.getDateInputForRelease()
+}
+
 def shortGitCommitHash() {
     helper = helperObj()
     return helper.getGitCommitHash()

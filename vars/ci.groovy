@@ -51,7 +51,9 @@ def call(StageParameters) {
                 }
                 steps{
                     script {
+                        String releaseDate = misc.rmDateInput()
                         def config = StageParameters.config
+                        println "Release Date: ${releaseDate}"
                         println "Version:" + VERSION
                         println config.deploy.qa
                         println config.deploy.test
