@@ -76,6 +76,7 @@ private String extractVersionNumber() {
     try {
         extractVersion = { it.split("version:")[1] }
         String versionWithBrackets = commitMsg.split("[\\[\\]]")[1]
+        println versionWithBrackets
         version = extractVersion(versionWithBrackets).trim()
     } catch(ArrayIndexOutOfBoundsException err) {
         error("Version not specified please specify version number in commit messege in format [Version:1.0]")
