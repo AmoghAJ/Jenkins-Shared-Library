@@ -10,7 +10,7 @@ pipeline {
         string(name: 'SOFTWARE_S3_PATH', defaultValue: null, description: 'Software zip')
         string(name: 'APP_NODE', defaultValue: null, description: 'Node label')
         string(name: 'VERSION', defaultValue: null, description: 'Software version')
-        choice(name: 'ENVIRONMENT', choices: ['qa', 'test', 'prod'], description: 'Environment')
+        choice(name: 'ENVIRONMENT', choices: ['ci', 'qa', 'test', 'prod'], description: 'Environment')
     }
     stages {
         stage('Download Software') {
