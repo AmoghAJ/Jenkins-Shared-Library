@@ -45,7 +45,7 @@ void packageArtifact(String zipName, String zipContent) {
     helper.zipArchive(zipName, zipContent)
 }
 
-String extractVersionNumber() {
+String getReleaseVersion() {
     helper = helperObj()
     helper.extractVersionNumber()
 }
