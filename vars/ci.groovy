@@ -3,9 +3,6 @@
 import org.jenkins.*
 
 def call(StageParameters) {
-    // def config = [:]
-    // body.resolveStrategy = Closure.DELEGATE_FIRST
-    // body.delegate = config
 
     pipeline {
         agent { label 'ci' }
@@ -17,6 +14,7 @@ def call(StageParameters) {
             APPLCICATION   = 'hello-world'
             ARTIFACT_ZIP   = misc.artifactZip(APPLCICATION)
             S3_BUCKET      = misc.artifactBucket(APPLCICATION)
+            VERSION        = misc.getReleaseVersion()
         }
         stages {
             stage('Build') {
@@ -54,7 +52,7 @@ def call(StageParameters) {
                 steps{
                     script {
                         def config = StageParameters.config
-                        println "Version:" + config.version
+                        println "Version:" + VERSION
                         println config.deploy.qa
                         println config.deploy.test
                         println config.deploy.prod
