@@ -6,10 +6,10 @@
 			"infra": {
 				"ci": {
 					"web": [
-						"buld-web"
+						"build-web"
 					],
 					"app": [
-						"buld-app"
+						"build-app"
 					]
 				},
 				"qa": {
