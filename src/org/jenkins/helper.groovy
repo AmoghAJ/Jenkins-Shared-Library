@@ -70,7 +70,7 @@ private void zipArchive(String zipName, String zipContent) {
     sh "zip ${zipName} ${zipContent}"
 }
 
-Private String extractVersionNumber() {
+private String extractVersionNumber() {
     String commitMsg = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim().toLowerCase()
     try {
         extractVersion = { it.split("version:")[1] }
