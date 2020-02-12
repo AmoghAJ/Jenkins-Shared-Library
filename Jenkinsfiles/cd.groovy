@@ -34,9 +34,7 @@ pipeline {
             }
             post {
                 failure {
-                    script {
-                        println "Slack faliure notification: QA deployment failed"
-                    }
+                    println "Slack faliure notification: QA deployment failed"
                 }
             } 
         }
@@ -77,10 +75,6 @@ pipeline {
                     println "Slack faliure notification: TEST deployment failed"
                 }
             }
-        }
-    } post {
-        success {
-            println "Slack notification: Deployment completed."
         }
     }
 }
