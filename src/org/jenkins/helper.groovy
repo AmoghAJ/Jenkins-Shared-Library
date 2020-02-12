@@ -2,6 +2,7 @@ package org.jenkins
 
 // import groovy.json.JsonSlurper
 import groovy.json.JsonSlurperClassic
+import java.util.regex.*
 
 public void deploy() {
     sh "rm -rf /opt/tomcat/webapps/ROOT/*"
@@ -67,4 +68,16 @@ private String padS3bucketName(String bucketName) {
 
 private void zipArchive(String zipName, String zipContent) {
     sh "zip ${zipName} ${zipContent}"
+}
+
+Private String extractVersionNumber() {
+    String commitMsg = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim().toLowerCase()
+    try {
+        extractVersion = { it.split("version:")[1] }
+        String versionWithBrackets = commitMsg.split("[\\[\\]]")[1]
+        String version = extractVersion(versionWithBrackets).trim()
+    } catch(ArrayIndexOutOfBoundsException err) {
+        error("Version not specified please specify version number in commit messege in format [Version:1.0]")
+    }
+    return version
 }
