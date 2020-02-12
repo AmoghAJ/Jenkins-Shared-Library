@@ -45,8 +45,8 @@ private void releaseCI(String app, String s3_path, String version, String env) {
     jobHelper   = new jobs()
     jobs        = jobHelper.createJob(this)
 
-    def webNode = data['apps'][app]['infra'][env]['web'][x]
-    def appNode = data['apps'][app]['infra'][env]['app'][x]
+    def webNode = data['apps'][app]['infra'][env]['web'][0]
+    def appNode = data['apps'][app]['infra'][env]['app'][0]
 
     releaseSequence(lbNode, webNode, appNode, s3_path, version, env, true)
 }
