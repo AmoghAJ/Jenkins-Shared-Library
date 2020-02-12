@@ -58,7 +58,7 @@ public String getZipFilename(String application, String gitCommit) {
 
 public String getArtifactBucket(String application) {
     data = resources_map()
-    return data['apps'][application]['zip']
+    return data['apps'][application]['artifacts-bucket']
 }
 
 private String padS3bucketName(String bucketName) {
