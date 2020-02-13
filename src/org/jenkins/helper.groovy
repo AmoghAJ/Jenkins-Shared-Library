@@ -110,8 +110,9 @@ private void versionChecker(String appVersion) {
     checkOutReleaseHelper()
     dir('release-management-helper') {
         result = sh(returnStdout: true, script: "invoke application-version-exist ${appVersion}").trim()
-        if (result == 'false'){
+        if (result == 'true'){
             error('Application version number: ${appVersion} already exist in the release database.')
         }
     }
+    dir("${WORKSPACE}")
 }
