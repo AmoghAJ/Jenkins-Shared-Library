@@ -152,8 +152,8 @@ private void triggerCD(releaseMap) {
         jobs.cd(release['artifact_path'],
                 appVersionMap['application'],
                 appVersionMap['version'],
-                release['release_to_qa'],
-                release['release_to_test'],
-                release['release_to_prod'])
+                release['release_to_qa'].toBoolean(),
+                release['release_to_test'].toBoolean(),
+                release['release_to_prod'].toBoolean())
     }
 }
