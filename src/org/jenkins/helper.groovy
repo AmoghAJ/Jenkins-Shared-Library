@@ -107,7 +107,7 @@ private void checkOutReleaseHelper() {
 }
 
 private void releaseHelerTaskRetrival() {
-    sh 'aws s3 cp s3//hello-world-ci-artifacts/tasks.py .'
+    sh 'aws s3 cp s3://hello-world-ci-artifacts/tasks.py .'
 }
 
 private void versionChecker(String appVersion) {
