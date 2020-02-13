@@ -28,7 +28,9 @@ def call(StageParameters) {
             }
             stage('Build') {
                 steps {
-                    mavenOperations action: "clean install -U"
+                    dir("${WORKSPACE}"){
+                        mavenOperations action: "clean install -U"
+                    }
                 }
                 post {
                     always {

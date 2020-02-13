@@ -114,5 +114,4 @@ private void versionChecker(String appVersion) {
             error("Application version number: ${appVersion} already exist in the release database.")
         }
     }
-    dir("${WORKSPACE}")
 }
