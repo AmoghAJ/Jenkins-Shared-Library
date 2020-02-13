@@ -16,7 +16,7 @@ pipeline {
         stage('Download Software') {
             agent { label "${params.APP_NODE}" }
             steps {
-                cleanWs()
+                // cleanWs()
                 awss3cp s3_object           :   "${params.SOFTWARE_S3_PATH}" ,
                         destination         :   "."
                 script {
