@@ -127,3 +127,13 @@ private void registerReleasetoDyno(String appVersion, String artifacts, String r
         currentBuild.result = 'UNSTABLE'
     }
 }
+
+private void markAsReleased(String appVersion) {
+    releaseHelerTaskRetrival()
+    releasedScript = "invoke update-released ${appVersion}"
+    result = sh(returnStatus: true, script: releasedScript)
+    if(result != 0) {
+        println "There is some problem in updating the release state as released in release management table."
+        currentBuild.result = 'UNSTABLE'
+    }
+}

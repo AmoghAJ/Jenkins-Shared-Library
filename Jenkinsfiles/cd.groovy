@@ -76,5 +76,12 @@ pipeline {
                 }
             }
         }
+    } 
+    post{
+        success {
+            script {
+                misc.markAsReleased("${params.APPLICATION}-${params.VERSION}")
+            }
+        }
     }
 }

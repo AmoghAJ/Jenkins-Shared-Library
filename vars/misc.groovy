@@ -64,3 +64,8 @@ void appVersionChecker(String appVersion) {
     helper = helperObj()
     helper.versionChecker(appVersion)
 }
+
+void markAsReleased(String appVersion) {
+    helper = helperObj()
+    helper.markAsReleased(appVersion)
+}
