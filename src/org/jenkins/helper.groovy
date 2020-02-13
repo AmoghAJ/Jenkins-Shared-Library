@@ -49,7 +49,7 @@ public void msVerfiy() {
 
 private String getDateInputForRelease() {
     try {
-        def inputDate = input(id: 'inputDate', message: 'Please specify date for the release', ok: "Submit",
+        def inputDate = input(id: 'inputDate', message: 'Please specify date for the release', ok: "Submit", submitter: "rm"
                       parameters: [string(defaultValue	: null,
                                           description	: 'Date formate: YYYYMMDD',
                                           name			: 'date')])
