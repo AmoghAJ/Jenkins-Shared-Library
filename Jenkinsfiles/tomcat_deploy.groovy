@@ -35,6 +35,10 @@ pipeline {
             agent { label "${params.APP_NODE}" }
             steps {
                 deploy()
+            }post {
+                always{
+                    cleanWs()
+                }
             }
         }
         stage('Start Tomcat') {
@@ -43,10 +47,6 @@ pipeline {
                 parameters: [string(name: 'LABEL', value: "${params.APP_NODE}"),
                              string(name: 'ACTION', value: 'start')]
             }
-        }
-    } post {
-        always{
-            cleanWs()
         }
     }
 }
