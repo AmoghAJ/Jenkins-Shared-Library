@@ -111,7 +111,7 @@ private void releaseHelerTaskRetrival() {
 }
 
 private void versionChecker(String appVersion) {
-        // releaseHelerTaskRetrival()
+        releaseHelerTaskRetrival()
         result = sh(returnStdout: true, script: "invoke application-version-exist ${appVersion}").trim()
         if (result == 'true'){
             error("Application version number: ${appVersion} already exist in the release database.")
