@@ -21,7 +21,7 @@ def call(StageParameters) {
                 steps {
                     appVersionChecker app_version: "${APPLCICATION}-${VERSION}"
                     script {
-                        currentBuild.displayName = "#${BUILD_NUMBER}-${APPLCICATION}-${VERSION}}"
+                        currentBuild.displayName = "#${BUILD_NUMBER}-${APPLCICATION}-${VERSION}"
                         currentBuild.description = "Artifact: ${ARTIFACT_ZIP}"
                     }
                 }
