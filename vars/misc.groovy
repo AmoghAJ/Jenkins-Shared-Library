@@ -54,3 +54,8 @@ String getReleaseVersion() {
     helper = helperObj()
     return helper.extractVersionNumber()
 }
+
+void registerRelease(String appVersion, String artifacts, String relDate, String relToQA ,String relToTest, String relToProd) {
+    helper = helperObj()
+    helper.registerReleasetoDyno(appVersion, artifacts, relDate, relToQA, relToTest, relToProd)
+}

@@ -65,12 +65,12 @@ def call(StageParameters) {
                     script {
                         String releaseDate = misc.rmDateInput()
                         def config = StageParameters.config
-                        println "Release Date: ${releaseDate}"
-                        println "Version:" + VERSION
-                        println config.deploy.qa
-                        println config.deploy.test
-                        println config.deploy.prod
-                        // println "Type: $(config.deploy.qa).getClass()"
+                        misc.registerRelease("${APPLCICATION}-${VERSION}", 
+                                             "${misc.s3BucketPadding(S3_BUCKET)}${ARTIFACT_ZIP}",
+                                             "${releaseDate}",
+                                             config.deploy.qa.toString(),
+                                             config.deploy.test.toString(),
+                                             config.deploy.prod.toString())
                     }
                 }
             }
