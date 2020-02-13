@@ -1,8 +1,8 @@
 package org.jenkins
 
-// import groovy.json.JsonSlurper
 import groovy.json.JsonSlurperClassic
 import java.util.regex.*
+import static java.util.Calendar.*
 
 public void deploy() {
     sh "rm -rf /opt/tomcat/webapps/ROOT/*"
@@ -138,4 +138,32 @@ private void markAsReleased(String appVersion) {
             currentBuild.result = 'UNSTABLE'
         }
     }
+}
+
+private def getReleases() {
+    releaseHelerTaskRetrival()
+    todays_date = new Date().format('yyyyMMdd').toString() 
+    releasedScript = "invoke get-pending-releases-for-date ${todays_date}"
+    try{
+        result = sh(returnStdout: true, script: releasedScript).trim()
+    } catch(err) {
+        error("Looks like something went wrong in fetching the releases information from release management table.\n${err}")
+    }
+    result = result.replaceAll("'", '"')
+    if (result != '[]') {
+        def JsonSlurperClassic = new groovy.json.JsonSlurperClassic()
+        def object = JsonSlurperClassic.parseText(result)
+        return object
+    } else {
+        return ''
+    }
+
+}
+
+private def getAppVersionSeperated(String appVersion) {
+    def appVersionMap = [:]
+    int indexOfSeperator = appVersion.lastIndexOf("-")
+    appVersionMap['application'] = appVersion.substring(0, indexOfSeperator)
+    appVersionMap['version'] = appVersion.substring(indexOfSeperator + 1)
+    return appVersionMap
 }

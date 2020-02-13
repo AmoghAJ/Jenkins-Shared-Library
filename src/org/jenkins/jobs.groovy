@@ -71,31 +71,14 @@ class Job {
         ])
     }
 
+    def cd(String s3_path, String app_node, String version, Boolean rel_to_qa, Boolean rel_to_test, Boolean rel_to_prod) {
+        buildRunner.runBuild('CD', [
+            'SOFTWARE_S3_PATH'      :   s3_path,
+            'APPLICATION'           :   app_node,
+            'VERSION'               :   version,
+            'RELEASE_ON_QA'         :   rel_to_qa,
+            'RELEASE_ON_TEST'       :   rel_to_test,
+            'RELEASE_ON_PROD'       :   rel_to_prod
+        ])
+    }
 }
-
-// public void haproxy(String lb_node, String web_node, String action) {
-//     build job: 'haproxy_operations', 
-//           parameters: [string(name: 'HAPROXY_NODE', value: lb_node),
-//                        string(name: 'APP_NODE', value: web_node),
-//                        string(name: 'ACTION', value: action)],
-//           wait: true,
-//           propagate: true
-// }
-
-// public void nginx(String web_node, String action) {
-//     build job: 'nginx_operation', 
-//           parameters: [string(name: 'LABEL', value: web_node),
-//                        string(name: 'ACTION', value: action)],
-//           wait: true,
-//           propagate: true
-// }
-
-// public void tomcat_deploy(String s3_path, String app_node, String version, String env) {
-//     build job: 'tomcat_deploy', 
-//           parameters: [string(name: 'SOFTWARE_S3_PATH', value: s3_path),
-//                        string(name: 'APP_NODE', value: app_node),
-//                        string(name: 'VERSION', value: version),
-//                        string(name: 'ENVIRONMENT', value: env)],
-//           wait: true,
-//           propagate: true
-// }

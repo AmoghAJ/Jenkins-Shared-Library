@@ -69,3 +69,13 @@ void markAsReleased(String appVersion) {
     helper = helperObj()
     helper.markAsReleased(appVersion)
 }
+
+def getReleaseForDeploy() {
+    helper = helperObj()
+    return helper.getReleases()
+}
+
+void triggerCD(releaseMap) {
+    helper = new releaseHelper()
+    helper.triggerCD(releaseMap)
+}

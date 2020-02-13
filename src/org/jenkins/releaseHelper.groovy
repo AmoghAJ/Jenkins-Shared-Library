@@ -142,3 +142,18 @@ private void releaseFirstVerifyRestParallel(String app, String s3_path, String v
         }
     }
 }
+
+private void triggerCD(releaseMap) {
+    helper      = new helper()
+    jobHelper   = new jobs()
+    jobs        = jobHelper.createJob(this)
+    releaseMap.each { release ->
+        appVersionMap = helper.getAppVersionSeperated(release['application_version'])
+        jobs.cd(release['artifact_path'],
+                appVersionMap['application'],
+                appVersionMap['version'],
+                release['release_to_qa'],
+                release['release_to_test'],
+                release['release_to_prod'])
+    }
+}
