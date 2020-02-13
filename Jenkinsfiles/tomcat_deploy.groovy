@@ -16,7 +16,6 @@ pipeline {
         stage('Download Software') {
             agent { label "${params.APP_NODE}" }
             steps {
-                // cleanWs()
                 awss3cp s3_object           :   "${params.SOFTWARE_S3_PATH}" ,
                         destination         :   "."
                 script {
@@ -44,6 +43,10 @@ pipeline {
                 parameters: [string(name: 'LABEL', value: "${params.APP_NODE}"),
                              string(name: 'ACTION', value: 'start')]
             }
+        }
+    } post {
+        always{
+            cleanWs()
         }
     }
 }
