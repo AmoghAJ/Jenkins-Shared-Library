@@ -34,8 +34,11 @@ pipeline {
         stage('Deploy') {
             agent { label "${params.APP_NODE}" }
             steps {
-                deploy()
-            }post {
+                script{
+                    deploy()
+                }
+            }
+            post {
                 always{
                     cleanWs()
                 }
