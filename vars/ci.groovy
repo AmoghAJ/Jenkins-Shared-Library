@@ -20,8 +20,8 @@ def call(StageParameters) {
                 steps {
                     script {
                         if(GIT_BRANCH == 'master')  {
-                            misc.appVersionChecker("${APPLCICATION}-${VERSION}")
                             env.VERSION        = misc.getReleaseVersion()
+                            misc.appVersionChecker("${APPLCICATION}-${VERSION}")
                         } else {
                             env.VERSION = GIT_BRANCH
                         }
