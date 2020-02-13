@@ -121,7 +121,7 @@ private void versionChecker(String appVersion) {
 private void registerReleasetoDyno(String appVersion, String artifacts, String relDate, String relToQA ,String relToTest, String relToProd) {
     releaseHelerTaskRetrival()
     insertScript = "invoke insert-new-release-info --app-version=${appVersion} --artifact=${artifacts} --rel-date=${relDate} --rel-to-qa=${relToQA} --rel-to-test=${relToTest} --rel-to-prod=${relToProd}"
-    result = sh(returnStatus: true, script: insertScript).trim()
+    result = sh(returnStatus: true, script: insertScript)
     if(result != 0) {
         println "There is some problem in inserting the data to release management table."
         currentBuild.result = 'UNSTABLE'
