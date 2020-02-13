@@ -19,8 +19,8 @@ def call(StageParameters) {
         stages {
             stage('Pre-Build Intialization') {
                 steps {
-                    appVersionChecker app_version: "${APPLCICATION}-${VERSION}"
                     script {
+                        misc.appVersionChecker("${APPLCICATION}-${VERSION}")
                         currentBuild.displayName = "#${BUILD_NUMBER}-${APPLCICATION}-${VERSION}"
                         currentBuild.description = "Artifact: ${ARTIFACT_ZIP}"
                     }

@@ -59,3 +59,8 @@ void registerRelease(String appVersion, String artifacts, String relDate, String
     helper = helperObj()
     helper.registerReleasetoDyno(appVersion, artifacts, relDate, relToQA, relToTest, relToProd)
 }
+
+void appVersionChecker(String appVersion) {
+    helper = helperObj()
+    helper.versionChecker(appVersion)
+}
