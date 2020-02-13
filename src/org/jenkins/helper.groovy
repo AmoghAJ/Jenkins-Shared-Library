@@ -106,12 +106,14 @@ private void checkOutReleaseHelper() {
     checkOut('https://github.com/AmoghAJ/release-management-helper.git')
 }
 
+private void releaseHelerTaskRetrival() {
+    sh 'aws s3 cp s3//hello-world-ci-artifacts/tasks.py .'
+}
+
 private void versionChecker(String appVersion) {
-    checkOutReleaseHelper()
-    dir('release-management-helper') {
+        releaseHelerTaskRetrival()
         result = sh(returnStdout: true, script: "invoke application-version-exist ${appVersion}").trim()
         if (result == 'true'){
             error("Application version number: ${appVersion} already exist in the release database.")
         }
-    }
 }
