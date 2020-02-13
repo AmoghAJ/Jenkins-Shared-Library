@@ -14,13 +14,17 @@ def call(StageParameters) {
             APPLCICATION   = 'hello-world'
             ARTIFACT_ZIP   = misc.artifactZip(APPLCICATION)
             S3_BUCKET      = misc.artifactBucket(APPLCICATION)
-            VERSION        = misc.getReleaseVersion()
         }
         stages {
             stage('Pre-Build Intialization') {
                 steps {
                     script {
-                        misc.appVersionChecker("${APPLCICATION}-${VERSION}")
+                        if(GIT_BRANCH == 'master')  {
+                            misc.appVersionChecker("${APPLCICATION}-${VERSION}")
+                            env.VERSION        = misc.getReleaseVersion()
+                        } else {
+                            env.VERSION = GIT_BRANCH
+                        }
                         currentBuild.displayName = "#${BUILD_NUMBER}-${APPLCICATION}-${VERSION}"
                         currentBuild.description = "Artifact: ${ARTIFACT_ZIP}"
                     }
