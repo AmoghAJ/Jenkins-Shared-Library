@@ -19,6 +19,7 @@ def call(StageParameters) {
         stages {
             stage('Build') {
                 steps {
+                    appVersionChecker app_version: "${APPLCICATION}-${VERSION}"
                     mavenOperations action: "clean install -U"
                 }
                 post {

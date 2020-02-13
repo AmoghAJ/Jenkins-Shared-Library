@@ -94,3 +94,23 @@ private String extractVersionNumber() {
     }
     return version
 }
+
+private void checkOut(String repo) {
+    git(
+       url: repo,
+       branch: "master"
+    )
+}
+
+private void checkOutReleaseHelper() {
+    checkOut('https://github.com/AmoghAJ/release-management-helper.git')
+}
+
+private void versionChecker(String appVersion) {
+    checkOutReleaseHelper()
+    dir('release-management-helper') {
+        result = sh(returnStdout: true, script: "invoke application-version-exist ${appVersion}").trim()
+        if result == 'false':
+            error('Application version number: ${appVersion} already exist in the release database.')
+    }
+}
