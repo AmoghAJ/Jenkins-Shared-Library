@@ -76,12 +76,13 @@ pipeline {
                 }
             }
         }
-    } 
-    post{
-        success {
-            script {
-                misc.markAsReleased("${params.APPLICATION}-${params.VERSION}")
+        stage('Marking released in Realease Mangement') {
+            agent { label "master" }
+            steps {
+                script {
+                    misc.markAsReleased("${params.APPLICATION}-${params.VERSION}")
+                }
             }
         }
-    }
+    } 
 }
